@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="form-container">
+
+    <h2>User Login</h2>
+
+    <form th:action="@{/login-page}" method="post">
+
+        <label>Email ID</label>
+
+        <input
+                type="email"
+                name="email"
+                placeholder="Enter Email Address">
+
+        <label>Password</label>
+
+        <input
+                type="password"
+                name="password"
+                placeholder="Enter Password">
+
+        <!-- Email Error -->
+        <p class="error"
+           th:if="${emailError}"
+           th:text="${emailError}">
+        </p>
+
+        <!-- Password Error -->
+        <p class="error"
+           th:if="${passwordError}"
+           th:text="${passwordError}">
+        </p>
+
+
+        <a th:href="@{/forgot-password}">
+            Forgot Password?
+        </a>
+
+        <button type="submit">
+            Login
+            </button>
+
+    </form>
+
+    <div class="bottom-link">
+
+        New User?
+
+        <a th:href="@{/register-page}">
+            Register Here
+        </a>
+
+    </div>
+
+    <p class="error"
+       th:if="${emailError}"
+       th:text="${emailError}">
+    </p>
+
+    <p class="error"
+       th:if="${passwordError}"
+       th:text="${passwordError}">
+    </p>
+</div>
+
+</body>
+</html>

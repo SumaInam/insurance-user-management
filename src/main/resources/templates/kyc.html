@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>KYC Upload</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="card">
+
+        <h2>📄 KYC Document Upload</h2>
+
+        <p>
+            Upload and manage your verification documents.
+        </p>
+
+        <form th:action="@{/kyc/upload}"
+              method="post"
+              enctype="multipart/form-data">
+
+            <div class="form-group">
+
+                <label>Document Type</label>
+
+                <select name="documentType" required>
+
+                    <option value="">
+                        Select Document
+                    </option>
+
+                    <option value="AADHAR">
+                        Aadhar Card
+                    </option>
+
+                    <option value="PAN">
+                        PAN Card
+                    </option>
+
+                    <option value="PASSPORT">
+                        Passport
+                    </option>
+
+                    <option value="DRIVING_LICENSE">
+                        Driving License
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Select File</label>
+
+                <input type="file"
+                       name="file"
+                       required>
+
+            </div>
+
+            <button type="submit"
+                    class="btn-save">
+
+                Upload Document
+
+            </button>
+
+        </form>
+
+        <hr>
+
+        <h3>Uploaded Documents</h3>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Document Name</th>
+                <th>Document Type</th>
+                <th>Status</th>
+                <th>Upload Date</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="doc : ${documents}">
+
+                <td th:text="${doc.documentName}"></td>
+
+                <td th:text="${doc.documentType}"></td>
+
+                <td>
+
+        <span th:if="${doc.status == 'PENDING'}"
+              class="status-pending"
+              th:text="${doc.status}">
+        </span>
+
+                    <span th:if="${doc.status == 'APPROVED'}"
+                          class="status-approved"
+                          th:text="${doc.status}">
+        </span>
+
+                    <span th:if="${doc.status == 'REJECTED'}"
+                          class="status-rejected"
+                          th:text="${doc.status}">
+        </span>
+
+                </td>
+
+                <td th:text="${doc.uploadDate}"></td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <a th:href="@{/account-center}" class="back-btn"> ← Back </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Policy Management</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="policy-container">
+
+    <div class="policy-card">
+
+        <h1>Policy Management</h1>
+
+        <!-- Filter Form -->
+
+        <form th:action="@{/policies}" method="get">
+
+            <div class="filter-grid">
+
+                <div class="form-group">
+
+                    <label>Policy Type</label>
+
+                    <select name="policyTypeId">
+
+                        <option value="">
+                            All Policies
+                        </option>
+
+                        <option
+                                th:each="type : ${policyTypes}"
+                                th:value="${type.policyTypeId}"
+                                th:text="${type.policyTypeName}">
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Policy Name</label>
+
+                    <input type="text"
+                           name="planName"
+                           placeholder="Search Policy">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Maximum Premium</label>
+
+                    <input type="number"
+                           name="premiumAmount"
+                           placeholder="Enter Amount">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Policy Term</label>
+
+                    <select name="policyTerm">
+
+                        <option value="">
+                            All Terms
+                        </option>
+
+                        <option value="1">1 Year</option>
+
+                        <option value="2">2 Year</option>
+
+                        <option value="3">3 Year</option>
+
+                        <option value="5">5 Years</option>
+
+                        <option value="10">10 Years</option>
+
+                        <option value="12">12 Year</option>
+
+                        <option value="15">15 Years</option>
+
+                        <option value="20">20 Years</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button type="submit"
+                    class="filter-btn">
+
+                Search Plans
+
+            </button>
+
+        </form>
+
+        <br>
+
+        <div th:if="${noPoliciesMessage}"
+             class="error-message">
+
+            <p th:text="${noPoliciesMessage}">
+            </p>
+
+        </div>
+        <table class="policy-table">
+
+            <thead>
+
+            <tr>
+                <th>Plan Name</th>
+                <th>Coverage</th>
+                <th>Premium</th>
+                <th>Policy Term</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="plan : ${plans}">
+
+                <td th:text="${plan.planName}"></td>
+
+                <td th:text="${plan.coverageAmount}"></td>
+
+                <td th:text="${plan.premiumAmount}"></td>
+
+                <td th:text="${plan.policyTerm} + ' Year(s)'"></td>
+
+                <td th:text="${plan.description}"></td>
+
+                <td>
+
+                    <a th:href="@{/policies/buy/{id}(id=${plan.insurancePlanId})}"
+                       class="buy-btn">
+
+                        Buy Policy
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <a th:href="@{/dashboard}"
+           class="back-btn">
+
+            Back To Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

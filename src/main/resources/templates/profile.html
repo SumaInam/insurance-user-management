@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<script th:if="${param.success}">
+    alert("Profile Updated Successfully!");
+    window.location.href = "/dashboard";
+</script>
+
+<body>
+
+<div class="page-container">
+
+    <div class="form-card">
+        <h2>👤 My Profile</h2>
+
+        <p>
+            Manage your personal information and keep your details up to date.
+        </p>
+
+        <form th:action="@{/profile/update}" method="post">
+
+            <div class="profile-grid">
+
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text"
+                           name="firstName"
+                           th:value="${user.firstName}">
+                </div>
+
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text"
+                           name="lastName"
+                           th:value="${user.lastName}">
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email"
+                           name="email"
+                           th:value="${user.email}">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text"
+                           name="phoneNumber"
+                           th:value="${user.phoneNumber}">
+                </div>
+
+                <div class="form-group">
+                    <label>Date Of Birth</label>
+                    <input type="date"
+                           name="dateOfBirth"
+                           th:value="${user.dateOfBirth}">
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+
+                    <select name="gender">
+
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="button-group">
+
+                <button type="submit"
+                        class="update-btn">
+
+                    Update Profile
+
+                </button>
+
+                <a th:href="@{/account-center}"
+                   class="back-btn"> ← Back </a>
+
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

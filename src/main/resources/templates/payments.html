@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Policy Payment</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="payment-container">
+
+    <div class="payment-card">
+
+        <h2>💳 Insurance Premium Payment</h2>
+
+        <div class="policy-summary">
+
+            <h3>Policy Summary</h3>
+
+            <p>
+                <strong>Policy Number:</strong>
+                <span th:text="${policy.policyNumber}"></span>
+            </p>
+
+            <p>
+                <strong>Plan Name:</strong>
+                <span th:text="${policy.insurancePlan.planName}"></span>
+            </p>
+
+            <p>
+                <strong>Customer Policy ID:</strong>
+                <span th:text="${policy.customerPolicyId}"></span>
+            </p>
+
+            <p>
+                <strong>Premium Amount:</strong>
+                ₹
+                <span th:text="${#numbers.formatDecimal(policy.premiumAmount,0,'COMMA',0,'POINT')}"></span>
+            </p>
+
+            <p>
+                <strong>Policy Status:</strong>
+                <span th:text="${policy.status}"></span>
+            </p>
+
+        </div>
+
+        <div class="payment-methods">
+
+            <h3>Select Payment Method</h3>
+
+            <div class="method-grid">
+
+                <div class="method-box method-selected"
+                     onclick="selectMethod('UPI',this)">
+                    📱 UPI
+                </div>
+
+                <div class="method-box"
+                     onclick="selectMethod('CARD',this)">
+                    💳 Card
+                </div>
+
+                <div class="method-box"
+                     onclick="selectMethod('DEBIT_CARD',this)">
+                    💳 Debit Card
+                </div>
+
+                <div class="method-box"
+                     onclick="selectMethod('NET_BANKING',this)">
+                    🏦 Net Banking
+                </div>
+
+            </div>
+
+        </div>
+
+        <input type="hidden"
+               id="paymentMethod"
+               value="UPI">
+
+        <br>
+
+        <button type="button"
+                class="pay-btn"
+                onclick="demoPay()">
+
+            Pay Premium
+
+        </button>
+
+        <br><br>
+
+        <a th:href="@{/policies}"
+           class="back-btn">
+
+            Back To Policies
+
+        </a>
+
+    </div>
+
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script th:inline="javascript">
+
+    // Keep selectedMethod synced with the hidden input and UI
+    let selectedMethod = document.getElementById('paymentMethod')?.value || "UPI";
+
+    function selectMethod(method, element){
+
+        selectedMethod = method;
+
+        // keep hidden input in sync (so server-side can read if needed)
+        const hidden = document.getElementById('paymentMethod');
+        if(hidden) hidden.value = method;
+
+        document
+            .querySelectorAll(".method-box")
+            .forEach(box =>
+                box.classList.remove("method-selected"));
+
+        element.classList.add("method-selected");
+    }
+
+    function demoPay(){
+
+        // Safely read values from Thymeleaf. Use JS inlining for numeric values
+        // Thymeleaf JS inlining: use the commented expression form so the
+        // server value is inserted as a proper JS literal (no extra quotes).
+        var key = /*[[${keyId}]]*/ '';
+        var orderId = /*[[${orderId}]]*/ '';
+        // premiumAmount as numeric literal (fallback 0)
+        var premiumAmount = /*[[${policy.premiumAmount}]]*/ 0;
+        var amountPaise = Math.round(Number(premiumAmount) * 100);
+
+        console.log("KEY = ", key);
+        console.log("ORDER = ", orderId);
+        console.log("AMOUNT (paise) = ", amountPaise);
+
+        // Basic validation to give clearer errors instead of failing silently
+        if(!key || key.trim() === ''){
+            alert('Payment gateway key is not configured. Please contact support.');
+            console.error('Razorpay keyId missing');
+            return;
+        }
+        if(!orderId || orderId.trim() === ''){
+            alert('Payment order id is missing. Please refresh the page and try again.');
+            console.error('Razorpay orderId missing');
+            return;
+        }
+        if(!amountPaise || isNaN(amountPaise) || amountPaise <= 0){
+            alert('Invalid payment amount. Please contact support.');
+            console.error('Invalid amountPaise:', amountPaise);
+            return;
+        }
+
+        var options = {
+
+            key: key,
+
+            amount: amountPaise,
+
+            currency: "INR",
+
+            name: "MetLife Insurance",
+
+            description: "Premium Payment",
+
+            order_id: orderId,
+
+            handler: function(response){
+
+                // Read values inserted by Thymeleaf as JS literals, then encode
+                var customerPolicyId = /*[[${policy.customerPolicyId}]]*/ '';
+                var paymentAmount = /*[[${policy.premiumAmount}]]*/ 0;
+
+                window.location.href =
+                    "/payment/success"
+                    + "?customerPolicyId=" + encodeURIComponent(customerPolicyId)
+                    + "&paymentAmount=" + encodeURIComponent(paymentAmount)
+                    + "&paymentMethod=" + encodeURIComponent(selectedMethod)
+                    + "&razorpayPaymentId=" + encodeURIComponent(response.razorpay_payment_id || '')
+                    + "&razorpayOrderId=" + encodeURIComponent(response.razorpay_order_id || '');
+            }
+        };
+
+        try{
+            var rzp = new Razorpay(options);
+
+            rzp.on('payment.failed', function(response){
+                console.error('Razorpay payment.failed', response);
+                var msg = response?.error?.description || 'Payment failed';
+                var reason = response?.error?.reason || '';
+                alert(msg + (reason ? ('\n\nReason: ' + reason) : ''));
+            });
+
+            rzp.open();
+        } catch (err){
+            console.error('Failed to open Razorpay checkout', err);
+            alert('Unable to open payment popup. Check console for details.');
+        }
+    }
+</script>
+
+</body>
+</html>

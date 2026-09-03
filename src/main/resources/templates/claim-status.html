@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Claim Status</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="form-card">
+
+        <h2>📢 Claim Status</h2>
+
+        <h3>
+
+            Current Status :
+
+            <span th:text="${status}">
+            </span>
+
+        </h3>
+
+        <br>
+
+        <a th:href="@{/claims}"
+           class="back-btn">
+
+            ← Back To Claims
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

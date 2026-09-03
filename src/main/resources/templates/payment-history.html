@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Payment History</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>💳 Payment History</h2>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Payment ID</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Transaction ID</th>
+                <th>Order ID</th>
+                <th>Payment ID</th>
+                <th>Receipt</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="payment : ${payments}">
+
+
+                <td th:text="${payment.paymentId}"></td>
+
+                <td>
+                    ₹ <span th:text="${payment.paymentAmount}"></span>
+                </td>
+
+                <td th:text="${payment.paymentMethod}"></td>
+
+                <td>
+
+                    <span style="color:green;font-weight:bold"
+                          th:text="${payment.paymentStatus}">
+                    </span>
+
+                </td>
+
+                <td th:text="${payment.transactionId}"></td>
+
+                <td th:text="${payment.razorpayOrderId}"></td>
+
+                <td th:text="${payment.razorpayPaymentId}"></td>
+
+                <td>
+
+                    <a th:href="@{/api/payments/receipt/{id}(id=${payment.paymentId})}"
+
+                       class="download-btn">
+
+                        📥 Receipt
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <a th:href="@{/dashboard}"
+           class="back-btn">
+
+            Back To Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

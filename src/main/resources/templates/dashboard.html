@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetLife Insurance Dashboard</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="portal-header">
+
+    <div class="logo">
+        🛡 METLIFE INSURANCE PORTAL
+    </div>
+
+    <div class="header-menu">
+
+        <a th:href="@{/notifications}">
+            🔔
+        </a>
+
+        <a th:href="@{/logout}">
+            Logout
+        </a>
+
+        <button class="menu-btn"
+                onclick="toggleMenu()">
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+<!-- RIGHT MENU -->
+
+<div id="sideMenu" class="slide-menu">
+
+    <div class="menu-header">
+
+        <h3>Quick Menu</h3>
+
+        <button class="close-btn"
+                onclick="toggleMenu()">
+            ✖
+        </button>
+
+    </div>
+
+    <a th:href="@{/account-center}">
+        👤 Account Center
+    </a>
+
+    <a th:href="@{/profile}">
+        👤 Profile
+    </a>
+
+    <a th:href="@{/address}">
+        📍 Address
+    </a>
+
+    <a th:href="@{/kyc}">
+        📄 KYC
+    </a>
+
+    <a th:href="@{/policies}">
+        🛡 Policies
+    </a>
+
+    <a th:href="@{/my-policies}">
+        📄 My Policies
+    </a>
+
+    <a th:href="@{/payments}">
+        💳 Payments
+    </a>
+
+    <a th:href="@{/claims}">
+        📢 Claims
+    </a>
+
+    <a th:href="@{/logout}">
+        🚪 Logout
+    </a>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div class="main-content">
+
+    <div class="welcome-box">
+
+        <h1>
+            Welcome
+            <span th:text="${userName}">
+                User
+            </span>
+            👋
+        </h1>
+
+        <h2>
+            Thank You For Choosing MetLife Insurance
+        </h2>
+
+        <p>
+            Protecting what matters most.
+        </p>
+
+        <p>
+            Manage your profile, policies, payments,
+            claims and insurance services in one place.
+        </p>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+        <a th:href="@{/account-center}" class="dashboard-card">
+
+            <h2>👤</h2>
+
+            <h3>Account Center</h3>
+
+            <p>Profile, Address and KYC</p>
+
+        </a>
+
+        <a th:href="@{/policies}" class="dashboard-card">
+
+            <h2>🛡</h2>
+
+            <h3>Policies</h3>
+
+            <p>View Available Policies</p>
+
+        </a>
+
+        <a th:href="@{/payments}" class="dashboard-card">
+
+            <h2>💳</h2>
+
+            <h3>Payments</h3>
+
+            <p>Payment History</p>
+
+        </a>
+
+        <a th:href="@{/claims}" class="dashboard-card">
+
+            <h2>📢</h2>
+
+            <h3>Claims</h3>
+
+            <p>Claim Tracking</p>
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script>
+
+    function toggleMenu() {
+        document
+            .getElementById("sideMenu")
+            .classList
+            .toggle("active");
+    }
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>My Policies</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="form-card">
+
+        <h2>📄 My Insurance Policies</h2>
+
+        <p>
+            View, download and renew your purchased policies.
+        </p>
+
+        <div th:each="policy : ${policies}"
+             class="policy-item-card">
+
+            <h3>
+                Policy Number :
+                <span th:text="${policy.policyNumber}"></span>
+            </h3>
+
+            <div class="policy-details">
+
+                <p>
+
+                    <strong>Premium :</strong>
+
+                    ₹ <span th:text="${policy.premiumAmount}"></span>
+
+                </p>
+
+                <p>
+
+                    <strong>Status :</strong>
+
+                    <span class="active-status"
+                          th:text="${policy.status}">
+                    </span>
+
+                </p>
+
+                <p>
+
+                    <strong>Start Date :</strong>
+
+                    <span th:text="${policy.startDate}">
+                    </span>
+
+                </p>
+
+                <p>
+
+                    <strong>End Date :</strong>
+
+                    <span th:text="${policy.endDate}">
+                    </span>
+
+                </p>
+
+            </div>
+
+            <div class="policy-actions">
+
+                <a th:href="@{/api/policies/download/{id}(id=${policy.customerPolicyId})}"
+                   class="download-btn">
+
+                    📥 Download PDF
+
+                </a>
+
+                <a th:href="@{/renew-policy/{id}(id=${policy.customerPolicyId})}"
+                   class="renew-btn">
+
+                    🔄 Renew Policy
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div style="text-align:center;margin-top:30px;">
+
+            <a th:href="@{/dashboard}"
+               class="back-btn">
+
+                ← Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

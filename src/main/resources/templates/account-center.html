@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Account Center</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="portal-header">
+
+    <div class="logo">
+        🛡 METLIFE INSURANCE PORTAL
+    </div>
+
+    <div class="header-menu">
+
+        <a th:href="@{/dashboard}">
+            Dashboard
+        </a>
+
+        <a th:href="@{/logout}">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+<div class="main-content">
+
+    <div class="welcome-box">
+
+        <h1>Account Center</h1>
+
+        <p>
+            Manage all your account information.
+        </p>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+        <a th:href="@{/profile}"
+           class="dashboard-card">
+
+            <h2>👤</h2>
+
+            <h3>Profile</h3>
+
+            <p>
+                Update personal details
+            </p>
+
+        </a>
+
+        <a th:href="@{/address}"
+           class="dashboard-card">
+
+            <h2>📍</h2>
+
+            <h3>Address</h3>
+
+            <p>
+                Manage addresses
+            </p>
+
+        </a>
+
+        <a th:href="@{/kyc}"
+           class="dashboard-card">
+
+            <h2>📄</h2>
+
+            <h3>KYC</h3>
+
+            <p>
+                Upload documents
+            </p>
+
+        </a>
+
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>

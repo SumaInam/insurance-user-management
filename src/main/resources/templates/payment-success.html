@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Payment Success</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="payment-container">
+
+    <div class="payment-card">
+
+        <h1 style="color:green;">
+            ✅ Payment Successful
+        </h1>
+
+        <br>
+
+        <p>
+
+            Thank you for purchasing your
+            insurance policy.
+
+        </p>
+
+        <br>
+
+        <div class="button-group">
+
+            <a th:href="@{/api/payments/receipt/{id}
+                (id=${payment.paymentId})}"
+
+               class="download-btn">
+
+                📥 Download Receipt
+
+            </a>
+
+            <a th:href="@{/my-policies}"
+               class="back-btn">
+
+                📄 View My Policies
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

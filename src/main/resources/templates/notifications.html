@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Notifications</title>
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="form-card">
+
+        <h2>🔔 Notifications</h2>
+
+        <div>
+
+            <a th:href="@{/notifications/read-all}"
+               class="update-btn">
+
+                ✅ Mark All Read
+
+            </a>
+
+        </div>
+
+        <br>
+
+        <table>
+
+            <tr>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+
+            <tr th:each="notification : ${notifications}">
+
+                <td th:text="${notification.title}"></td>
+
+                <td th:text="${notification.message}"></td>
+
+                <td th:text="${notification.notificationType}"></td>
+
+                <td th:text="${notification.status}"></td>
+
+                <td th:text="${notification.createdDate}"></td>
+
+            </tr>
+
+        </table>
+
+        <br>
+
+        <a th:href="@{/dashboard}"
+           class="back-btn">
+
+            ← Back
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Renew Policy</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="payment-container">
+
+    <div class="payment-card">
+
+        <h2>
+            🔄 Policy Renewal
+        </h2>
+
+        <div class="policy-summary">
+
+            <h3>
+                Policy Information
+            </h3>
+
+            <p>
+
+                <strong>Policy Number:</strong>
+
+                <span th:text="${policy.policyNumber}">
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Plan Name:</strong>
+
+                <span th:text="${policy.insurancePlan.planName}">
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Current Status:</strong>
+
+                <span th:text="${policy.status}">
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Start Date:</strong>
+
+                <span th:text="${policy.startDate}">
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Current End Date:</strong>
+
+                <span th:text="${policy.endDate}">
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Renewal Premium:</strong>
+
+                ₹
+
+                <span th:text="${policy.premiumAmount}">
+                </span>
+
+            </p>
+
+        </div>
+
+        <div style="text-align:center;">
+
+            <h3>
+
+                Renew Policy For 1 Additional Year
+
+            </h3>
+
+            <br>
+
+            <a th:href="@{/renew-policy/confirm/{id}
+               (id=${policy.customerPolicyId})}"
+
+               class="renew-btn">
+
+                Renew Now
+
+            </a>
+
+        </div>
+
+        <br><br>
+
+        <div style="text-align:center;">
+
+            <a th:href="@{/my-policies}"
+               class="back-btn">
+
+                Back To My Policies
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

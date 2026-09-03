@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Claims Management</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="form-card">
+
+        <h2>📢 Claims Management</h2>
+
+        <p>
+            Submit, track and manage insurance claims.
+        </p>
+
+        <form th:action="@{/claims/submit}"
+              method="post">
+
+            <div class="form-group">
+
+                <label>Customer Policy ID</label>
+
+                <input type="number"
+                       name="customerPolicyId"
+                       required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Claim Amount</label>
+
+                <input type="number"
+                       name="claimAmount"
+                       required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Claim Reason</label>
+
+                <textarea name="claimReason"
+                          rows="4"
+                          required>
+                </textarea>
+
+            </div>
+
+            <button type="submit"
+                    class="update-btn">
+
+                Submit Claim
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <br>
+
+    <div class="form-card">
+
+        <h3>📋 My Claims</h3>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Claim Id</th>
+
+                <th>Amount</th>
+
+                <th>Status</th>
+
+                <th>Action</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="claim : ${claims}">
+
+                <td th:text="${claim.claimId}"></td>
+
+                <td>
+                    ₹ <span th:text="${claim.claimAmount}"></span>
+                </td>
+
+                <td th:text="${claim.status}"></td>
+
+                <td>
+
+                    <a th:href="@{/claim-status/{id}
+                       (id=${claim.claimId})}"
+
+                       class="edit-btn">
+
+                        Track
+
+                    </a>
+
+                    <a th:href="@{/claim-documents/{id}
+                       (id=${claim.claimId})}"
+
+                       class="download-btn">
+
+                        Documents
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <br>
+
+    <a th:href="@{/dashboard}"
+       class="back-btn">
+
+        ← Back
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

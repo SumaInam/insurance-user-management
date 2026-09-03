@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Address Management</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="card">
+
+        <h2>📍 Address Management</h2>
+
+        <p>
+            Add, edit or delete your address details.
+        </p>
+
+
+        <form th:action="@{/address/save}" method="post">
+
+            <input type="hidden"
+                   name="addressId"
+                   th:value="${address.addressId}">
+
+            <div class="form-group">
+                <label>City</label>
+                <input type="text"
+                       name="city"
+                       th:value="${address.city}"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>State</label>
+                <input type="text"
+                       name="state"
+                       th:value="${address.state}"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Pin Code</label>
+                <input type="text"
+                       name="pinCode"
+                       th:value="${address.pinCode}"
+                       required>
+            </div>
+
+            <button type="submit"
+                    class="btn-save">
+                Save Address
+            </button>
+
+        </form>
+
+        <hr>
+
+        <h3>My Addresses</h3>
+
+        <table>
+
+            <thead>
+            <tr>
+                <th>City</th>
+                <th>State</th>
+                <th>Pin Code</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="addr : ${addresses}">
+
+                <td th:text="${addr.city}"></td>
+
+                <td th:text="${addr.state}"></td>
+
+                <td th:text="${addr.pinCode}"></td>
+
+                <td>
+
+                    <a th:href="@{/address/edit/{id}(id=${addr.addressId})}"
+                       class="edit-btn">
+                        Edit
+                    </a>
+
+                    <a th:href="@{/address/delete/{id}(id=${addr.addressId})}"
+                       class="delete-btn"
+                       onclick="return confirm('Delete this address?')">
+                        Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <a th:href="@{/account-center}"
+           class="back-btn"> ← Back  </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
