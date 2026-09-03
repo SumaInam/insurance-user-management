@@ -6,6 +6,9 @@
 trigger:
 - main
 
+variables:
+- group: Insurance-Secrets
+
 pool:
   vmImage: ubuntu-latest
 
